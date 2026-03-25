@@ -1,5 +1,20 @@
 # node-addon-api Changelog
 
+## [8.6.0](https://github.com/nodejs/node-addon-api/compare/v8.5.0...v8.6.0) (2026-01-30)
+
+
+### Features
+
+* add SharedArrayBuffer ([#1688](https://github.com/nodejs/node-addon-api/issues/1688)) ([220bee2](https://github.com/nodejs/node-addon-api/commit/220bee244fae2e36405bf2bda33cb3985a846912))
+* silence a legitimate vfptr sanitizer warning that is on by default in Android NDK 29 ([#1692](https://github.com/nodejs/node-addon-api/issues/1692)) ([46673f4](https://github.com/nodejs/node-addon-api/commit/46673f403adf799cc73419427dd3cf166badff22))
+
+## [8.5.0](https://github.com/nodejs/node-addon-api/compare/v8.4.0...v8.5.0) (2025-07-04)
+
+
+### Features
+
+* add Then and Catch methods to Promise ([#1668](https://github.com/nodejs/node-addon-api/issues/1668)) ([ab3e5fe](https://github.com/nodejs/node-addon-api/commit/ab3e5fe59570cbb5ed7cc9891b3f25fe373f028f))
+
 ## [8.4.0](https://github.com/nodejs/node-addon-api/compare/v8.3.1...v8.4.0) (2025-06-11)
 
 
