@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.15)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(BUILD_TESTING OFF)
 
 project(node-addon-api
     LANGUAGES CXX C
@@ -21,10 +20,17 @@ endif()
 option(NODE_ADDON_API_ENABLE_MAYBE "Enable Maybe" OFF)
 option(NODE_API_SWALLOW_UNTHROWABLE_EXCEPTIONS "Swallow unthrowable exceptions" ON)
 
-find_package(unofficial-node-api-headers CONFIG REQUIRED)
+message(STATUS "Build for ${CMAKE_SYSTEM_NAME}")
+
+set(node-api-headers)
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    find_package(unofficial-node-api-headers CONFIG REQUIRED)
+    set(node-api-headers unofficial::node-api-headers::node-api-headers)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "OHOS")
+endif()
 
 add_library(node-addon-api INTERFACE napi.h napi-inl.h)
-target_link_directories(node-addon-api INTERFACE unofficial::node-api-headers::node-api-headers)
+target_link_libraries(node-addon-api INTERFACE ${node-api-headers})
 target_include_directories(node-addon-api INTERFACE
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
@@ -36,9 +42,12 @@ target_compile_definitions(node-addon-api INTERFACE
     $<$<BOOL:${NODE_ADDON_API_ENABLE_MAYBE}>:NODE_ADDON_API_ENABLE_MAYBE>
     $<$<BOOL:${NODE_API_SWALLOW_UNTHROWABLE_EXCEPTIONS}>:NODE_API_SWALLOW_UNTHROWABLE_EXCEPTIONS>
 )
+set_target_properties(node-addon-api
+    PROPERTIES LANGUAGE CXX
+)
 
 # Just for cmake can generate compile_commands.json for LSP
-add_library(phony OBJECT nothing.c)
+add_library(phony OBJECT nothing.cc)
 target_link_libraries(phony PUBLIC node-addon-api)
 
 include(CTest)

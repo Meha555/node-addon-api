@@ -10,7 +10,11 @@
 #endif
 #endif
 
+#ifndef __OHOS__
 #include <node_api.h>
+#else
+#include <napi/native_api.h>
+#endif
 #include <functional>
 #include <initializer_list>
 #include <memory>
